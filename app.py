@@ -1,39 +1,72 @@
-import streamlit as st
 import hydralit_components as hc
-import datetime
-
-#make it look nice from the start
-st.set_page_config(layout='wide',initial_sidebar_state='collapsed',)
-
-# specify the primary menu definition
-menu_data = [
-    {'icon': "far fa-copy", 'label':"Left End"},
-    {'id':'Copy','icon':"🐙",'label':"Copy"},
-    {'icon': "fa-solid fa-radar",'label':"Dropdown1", 'submenu':[{'id':' subid11','icon': "fa fa-paperclip", 'label':"Sub-item 1"},{'id':'subid12','icon': "💀", 'label':"Sub-item 2"},{'id':'subid13','icon': "fa fa-database", 'label':"Sub-item 3"}]},
-    {'icon': "far fa-chart-bar", 'label':"Chart"},#no tooltip message
-    {'id':' Crazy return value 💀','icon': "💀", 'label':"Calendar"},
-    {'icon': "fas fa-tachometer-alt", 'label':"Dashboard",'ttip':"I'm the Dashboard tooltip!"}, #can add a tooltip message
-    {'icon': "far fa-copy", 'label':"Right End"},
-    {'icon': "fa-solid fa-radar",'label':"Dropdown2", 'submenu':[{'label':"Sub-item 1", 'icon': "fa fa-meh"},{'label':"Sub-item 2"},{'icon':'🙉','label':"Sub-item 3",}]},
-]
-
-over_theme = {'txc_inactive': '#FFFFFF'}
-menu_id = hc.nav_bar(
-    menu_definition=menu_data,
-    override_theme=over_theme,
-    home_name='Home',
-    login_name='Logout',
-    hide_streamlit_markers=False, #will show the st hamburger as well as the navbar now!
-    sticky_nav=True, #at the top or not
-    sticky_mode='pinned', #jumpy or not-jumpy, but sticky or pinned
-)
-
-if st.button('click me'):
-  st.info('You clicked at: {}'.format(datetime.datetime.now()))
+import streamlit as st
 
 
-if st.sidebar.button('click me too'):
-  st.info('You clicked at: {}'.format(datetime.datetime.now()))
+hc.hydralit_experimental(True)
 
-#get the id of the menu item clicked
-st.info(f"{menu_id}")
+
+modal_code = """
+<div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+Hydralit Components Experimental Demo!
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Modal Popup Form!</h5>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container">
+<h2>Pure JS+HTML Form</h2>
+<form class="form-horizontal" action="/">
+<div class="form-group">
+<label class="control-label col-sm-2" for="email">Email:</label>
+<div class="col-sm-10">
+  <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+</div>
+</div>
+<div class="form-group">
+<label class="control-label col-sm-2" for="pwd">Password:</label>
+<div class="col-sm-10">          
+  <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+</div>
+</div>
+<div class="form-group">        
+<div class="col-sm-offset-2 col-sm-10">
+  <div class="checkbox">
+    <label><input type="checkbox" name="remember"> Remember me</label>
+  </div>
+</div>
+</div>
+<div class="form-group">        
+<div class="col-sm-offset-2 col-sm-10">
+  <button type="submit" class="btn btn-default">Submit</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <button type="button" class="btn btn-primary">Save changes</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+"""
+
+
+st.markdown(modal_code,unsafe_allow_html=True)
+query_param = st.experimental_get_query_params()
+
+if query_param:
+    st.write('We caputred these values from the experimental modal form using Javascript + HTML + Streamlit + Hydralit Components.')
+    st.write(query_param)
