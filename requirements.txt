@@ -1,3 +1,4 @@
 streamlit
 pip==21.3.1
 hydralit_components
+flask
